@@ -1,0 +1,26 @@
+﻿.album-card {
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-top: .5rem;
+    margin-top: .5rem;
+    height: 200px;
+
+    @include break-point(md) {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        height: 230px;
+    }
+
+    .buttons-controls {
+        bottom: 0;
+        position: absolute;
+        padding-bottom: 1rem;
+
+        @include break-point(md) {
+            padding-bottom: 1.3rem;
+        }
+    }
+}

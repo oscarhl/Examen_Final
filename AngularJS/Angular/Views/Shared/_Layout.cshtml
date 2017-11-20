@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cibertec.Angular</title>
+    <environment names="Development">
+        <link href="~/libraries/bootstrap/css/bootstrap.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Production">
+        <link href="~/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+</head>
+<body ng-controller="applicationController as vm"
+      ng-init="init('@ViewBag.WebApiUrl')">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" datatoggle="collapse"
+                        data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a ui-sref="home" ui-sref-active="active"
+                   class="navbar-brand">Cibertec.Angular</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a ng-if="!vm.validate()" ui-sref="login" uisref-active="active">Login</a></li>
+                    <li>
+                        <a ng-if="vm.validate()" ng-click="vm.logout()"
+                           href="#" ui-sref-active="active">Logout</a>
+                    </li>
+                    <li><a ng-if="vm.validate()" ui-sref="album" ui-srefactive="active">Album</a></li>
+                    <li><a ng-if="vm.validate()" ui-sref="artist" ui-srefactive="active">Artist</a></li>
+                    <li><a ng-if="vm.validate()" ui-sref="customer" ui-srefactive="active">Customer</a></li>
+                    <li><a ng-if="vm.validate()" ui-sref="employee" ui-srefactive="active">Employee</a></li>
+                    
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2017 - Cibertec.Angular</p>
+        </footer>
+    </div>
+    <environment names="Development">
+        <script src="~/js/bootstrap.js"></script>
+        <script src="~/js/angular.js"></script>
+        <script src="~/js/app-site.js"></script>
+        <script src="~/js/app-cibertec.js"></script>
+    </environment>
+
+    <environment names="Production">
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/angular.min.js"></script>
+        <script src="~/js/app-site.min.js"></script>
+        <script src="~/js/app-cibertec.min.js"></script>
+    </environment>
+</body>
+</html>

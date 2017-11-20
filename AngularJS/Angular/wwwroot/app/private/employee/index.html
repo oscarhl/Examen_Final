@@ -1,0 +1,55 @@
+﻿<div ng-controller="employeeController as vm">
+    <div ng-show="vm.showCreate" class="alert alert-success alert-dismissable">
+        <a href="" class="close" data-dismiss="alert" arialabel="close">&times;</a>
+        <strong>OK</strong> The employee was created properly.
+    </div>
+    <div>
+        <button ng-click="vm.create();" data-toggle="modal" data-target="#modal-container"
+                class="btn btn-success btn-sm">
+            <span class="glyphicon glyphicon-plus"></span> Create New
+            employee
+        </button>
+    </div>
+    <ul uib-pagination total-items="vm.totalRecords"
+        items-per-page="vm.itemsPerPage"
+        ng-model="vm.currentPage"
+        max-size="vm.maxSize"
+        ng-change="vm.pageChanged()"></ul>
+    <div class="row">
+        <employee-card ng-repeat-start="employee in vm.employeeList "
+                      employee-id="{{::employee.employeeId}}"
+                      last-name="{{::employee.lastName}}"
+                      first-name="{{::employee.firstName}}"
+                      title="{{::employee.title}}"
+                      city="{{::employee.city}}"
+                      country="{{::employee.country}}"
+                      email="{{::employee.email}}"
+                     >
+            <button ng-click="vm.getemployee(employee.employeeId); vm.edit();"
+                    data-toggle="modal" data-target="#modal-container" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-edit"></span> Edit
+            </button>
+
+            <button ng-click="vm.getemployee(employee.employeeId); vm.delete();"
+                    data-toggle="modal" data-target="#modal-container" class="btn btn-danger btn-sm">
+                <span class="glyphicon glyphicon-erase"></span> Delete
+            </button>
+        </employee-card>
+        <div ng-repeat-end ng-if="($index+1) % 3 == 0"
+             class="clearfix"></div>
+    </div>
+    <ul uib-pagination total-items="vm.totalRecords"
+        items-per-page="vm.itemsPerPage"
+        ng-model="vm.currentPage"
+        max-size="vm.maxSize"
+        ng-change="vm.pageChanged()"></ul>
+    <modal-panel title="{{vm.modalTitle}}"
+                 button-title="{{vm.modalButtonTitle}}"
+                 save-function="vm.modalFunction"
+                 close-function="vm.closeModal"
+                 read-only="vm.readOnly"
+                 is-delete="vm.isDelete">
+        <employee-form employee="vm.employee">
+        </employee-form>
+    </modal-panel>
+</div>

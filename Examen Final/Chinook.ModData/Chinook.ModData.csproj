@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="3.51.0" />
+    <PackageReference Include="Moq" Version="4.7.145" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Chinook.Models\Chinook.Models.csproj" />
+    <ProjectReference Include="..\Chinook.UnitOfWork\Chinook.UnitOfWork.csproj" />
+  </ItemGroup>
+
+</Project>

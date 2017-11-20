@@ -1,0 +1,22 @@
+﻿body {
+    background-color: $background-color;
+    margin: 2rem 2rem;
+    padding-top: 5rem;
+
+    @include break-point(md) {
+        margin-left: 5rem;
+        margin-right: 5rem;
+    }
+
+    footer {
+        background: $site-color-black;
+        color: $site-color-white;
+        height: 3rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding-top: 5px;
+    }
+}

@@ -1,0 +1,51 @@
+﻿<div ng-controller="albumController as vm">
+    <div ng-show="vm.showCreate" class="alert alert-success alert-dismissable">
+        <a href="" class="close" data-dismiss="alert" arialabel="close">&times;</a>
+        <strong>OK</strong> The album was created properly.
+    </div>
+    <div>
+        <button ng-click="vm.create();" data-toggle="modal" data-target="#modal-container"
+                class="btn btn-success btn-sm">
+            <span class="glyphicon glyphicon-plus"></span> Create New
+            album
+        </button>
+    </div>
+    <ul uib-pagination total-items="vm.totalRecords"
+        items-per-page="vm.itemsPerPage"
+        ng-model="vm.currentPage"
+        max-size="vm.maxSize"
+        ng-change="vm.pageChanged()"></ul>
+    <div class="row">
+        <album-card ng-repeat-start="album in vm.albumList "
+                      album-id="{{::album.albumId}}"
+                      title="{{::album.title}}"
+                      artist-id="{{::album.artistId}}"
+                      >
+            <button ng-click="vm.getalbum(album.albumId); vm.edit();"
+                    data-toggle="modal" data-target="#modal-container" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-edit"></span> Edit
+            </button>
+
+            <button ng-click="vm.getalbum(album.albumId); vm.delete();"
+                    data-toggle="modal" data-target="#modal-container" class="btn btn-danger btn-sm">
+                <span class="glyphicon glyphicon-erase"></span> Delete
+            </button>
+        </album-card>
+        <div ng-repeat-end ng-if="($index+1) % 3 == 0"
+             class="clearfix"></div>
+    </div>
+    <ul uib-pagination total-items="vm.totalRecords"
+        items-per-page="vm.itemsPerPage"
+        ng-model="vm.currentPage"
+        max-size="vm.maxSize"
+        ng-change="vm.pageChanged()"></ul>
+    <modal-panel title="{{vm.modalTitle}}"
+                 button-title="{{vm.modalButtonTitle}}"
+                 save-function="vm.modalFunction"
+                 close-function="vm.closeModal"
+                 read-only="vm.readOnly"
+                 is-delete="vm.isDelete">
+        <album-form album="vm.album">
+        </album-form>
+    </modal-panel>
+</div>

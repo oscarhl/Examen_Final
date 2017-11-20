@@ -1,0 +1,53 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/js/angular.js",
+    "inputFiles": [
+      "wwwroot/libraries/angular/angular.js",
+      "wwwroot/libraries/angular/angular-ui-router.js",
+      "wwwroot/libraries/angular/angular-local-storage.js",
+      "wwwroot/libraries/angular/ui-bootstrap-tpls.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/bootstrap.js",
+    "inputFiles": [
+      "wwwroot/libraries/jquery/jquery.js",
+      "wwwroot/libraries/bootstrap/js/bootstrap.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "outputFileName": "wwwroot/js/app-site.js",
+    "inputFiles": [
+      "wwwroot/app/app.js",
+      "wwwroot/app/app.routes.js",
+      "wwwroot/app/app.config.js",
+      "wwwroot/app/app.interceptor.js",
+      "wwwroot/app/app.controller.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    }
+  },
+  {
+    "inputFiles": [
+      "wwwroot/app/components/**/*.js",
+      "wwwroot/app/shared/**/*.js",
+      "wwwroot/app/private/**/*.js",
+      "wwwroot/app/public/**/*.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "outputFileName": "wwwroot/js/app-cibertec.js"
+  }
+]
