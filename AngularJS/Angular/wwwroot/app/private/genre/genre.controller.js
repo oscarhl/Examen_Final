@@ -1,17 +1,17 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('genreController', genreController);
+    genreController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function genreController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.genre = {};
+        vm.genreList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -22,10 +22,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getgenre = getgenre;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = genreDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -44,7 +44,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/genre/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -54,46 +54,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/genre/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.genreList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.genreList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getgenre(id) {
+            vm.genre = null;
+            dataService.getData(apiUrl + '/genre/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.genre = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.genre = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updategenre() {
+            if (!vm.genre) return;
+            dataService.putData(apiUrl + '/genre', vm.genre)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.genre = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.genre = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function creategenre() {
+            if (!vm.genre) return;
+            dataService.postData(apiUrl + '/genre', vm.genre)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getgenre(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -104,9 +104,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deletegenre() {
+            dataService.deleteData(apiUrl + '/genre/' +
+                vm.genre.genreId)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -116,34 +116,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.genre = {};
+            vm.modalTitle = 'Create genre';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = creategenre;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit genre';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updategenre;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New genre Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function genreDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete genre';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deletegenre;
             vm.isDelete = true;
         }
         function closeModal() {

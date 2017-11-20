@@ -1,20 +1,16 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .directive('productCard', productCard);
-    function productCard() {
+        .directive('mediaTypeCard', mediaTypeCard);
+    function mediaTypeCard() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
-                id: '@',
-                productName: '@',
-                supplierId: '@',
-                unitPrice: '@',
-                package: '@',
-                isDiscontinued: '='
+                mediaTypeId: '@',
+                name: '@'
             },
-            templateUrl: 'app/private/product/directives/productcard/product-card.html'
+            templateUrl: 'app/private/mediaType/directives/mediaTypecard/mediaType-card.html'
 
         };
     }

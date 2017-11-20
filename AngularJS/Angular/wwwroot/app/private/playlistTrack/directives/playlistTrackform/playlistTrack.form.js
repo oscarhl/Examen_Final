@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('playlistTrackForm', playlistTrackForm);
+    function playlistTrackForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                playlistTrack: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/playlistTrack/directives/playlistTrackform/playlistTrack-form.html'
         };
     }
 })();

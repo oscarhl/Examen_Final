@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('invoiceLineForm', invoiceLineForm);
+    function invoiceLineForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                invoiceLine: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/invoiceLine/directives/invoiceLineform/invoiceLine-form.html'
         };
     }
 })();

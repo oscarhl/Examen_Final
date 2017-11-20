@@ -1,17 +1,17 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('playlistController', playlistController);
+    playlistController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function playlistController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.playlist = {};
+        vm.playlistList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -22,10 +22,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getplaylist = getplaylist;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = playlistDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -44,7 +44,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/playlist/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -54,46 +54,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/playlist/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.playlistList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.playlistList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getplaylist(id) {
+            vm.playlist = null;
+            dataService.getData(apiUrl + '/playlist/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.playlist = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.playlist = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updateplaylist() {
+            if (!vm.playlist) return;
+            dataService.putData(apiUrl + '/playlist', vm.playlist)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.playlist = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.playlist = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createplaylist() {
+            if (!vm.playlist) return;
+            dataService.postData(apiUrl + '/playlist', vm.playlist)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getplaylist(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -104,9 +104,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deleteplaylist() {
+            dataService.deleteData(apiUrl + '/playlist/' +
+                vm.playlist.playlistId)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -116,34 +116,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.playlist = {};
+            vm.modalTitle = 'Create playlist';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createplaylist;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit playlist';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updateplaylist;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New playlist Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function playlistDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete playlist';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deleteplaylist;
             vm.isDelete = true;
         }
         function closeModal() {

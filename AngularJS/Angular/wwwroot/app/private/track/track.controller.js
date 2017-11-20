@@ -1,17 +1,17 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('trackController', trackController);
+    trackController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function trackController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.track = {};
+        vm.trackList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -22,10 +22,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.gettrack = gettrack;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = trackDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -44,7 +44,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/track/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -54,46 +54,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/track/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.trackList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.trackList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function gettrack(id) {
+            vm.track = null;
+            dataService.getData(apiUrl + '/track/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.track = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.track = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updatetrack() {
+            if (!vm.track) return;
+            dataService.putData(apiUrl + '/track', vm.track)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.track = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.track = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createtrack() {
+            if (!vm.track) return;
+            dataService.postData(apiUrl + '/track', vm.track)
                 .then(function (result) {
-                    getProduct(result.data);
+                    gettrack(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -104,9 +104,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deletetrack() {
+            dataService.deleteData(apiUrl + '/track/' +
+                vm.track.id)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -116,34 +116,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.track = {};
+            vm.modalTitle = 'Create track';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createtrack;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit track';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updatetrack;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New track Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function trackDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete track';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deletetrack;
             vm.isDelete = true;
         }
         function closeModal() {

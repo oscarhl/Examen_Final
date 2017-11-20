@@ -1,39 +1,39 @@
 ﻿<div class="form-horizontal">
-    <input type="hidden" ng-model="product.id" value="{{product.id}}" />
+    <input type="hidden" ng-model="invoiceLine.id" value="{{invoiceLine.id}}" />
     <div class="form-group">
-        <label class="col-sm-4 control-label">Product Name: </label>
+        <label class="col-sm-4 control-label">invoiceLine Name: </label>
         <div class="col-sm-6">
             <input id="companyName" class="form-control" type="text"
-                   ng-model="product.productName" value="{{product.productName}}" />
+                   ng-model="invoiceLine.invoiceLineName" value="{{invoiceLine.invoiceLineName}}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Supplier Id: </label>
         <div class="col-sm-6">
-            <input class="form-control" type="text" ng-model="product.supplierId"
-                   value="{{product.supplierId}}" />
+            <input class="form-control" type="text" ng-model="invoiceLine.supplierId"
+                   value="{{invoiceLine.supplierId}}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Unit Price: </label>
         <div class="col-sm-6">
-            <input class="form-control" type="text" ng-model="product.unitPrice"
-                   value="{{product.unitPrice}}" />
+            <input class="form-control" type="text" ng-model="invoiceLine.unitPrice"
+                   value="{{invoiceLine.unitPrice}}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Package: </label>
         <div class="col-sm-6">
-            <input class="form-control" type="text" ng-model="product.package"
-                   value="{{product.package}}" />
+            <input class="form-control" type="text" ng-model="invoiceLine.package"
+                   value="{{invoiceLine.package}}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">
             Is Discontinued?:
         </label>
-        <input type="checkbox" ng-model="product.isDiscontinued"
-               checked="{{product.isDiscontinued? 'checked':''}}"
-               value="{{product.isDiscontinued}}" />
+        <input type="checkbox" ng-model="invoiceLine.isDiscontinued"
+               checked="{{invoiceLine.isDiscontinued? 'checked':''}}"
+               value="{{invoiceLine.isDiscontinued}}" />
     </div>
 </div>

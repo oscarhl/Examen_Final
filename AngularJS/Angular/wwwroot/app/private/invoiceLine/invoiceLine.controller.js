@@ -1,17 +1,17 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('invoiceLineController', invoiceLineController);
+    invoiceLineController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function invoiceLineController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.invoiceLine = {};
+        vm.invoiceLineList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -22,10 +22,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getinvoiceLine = getinvoiceLine;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = invoiceLineDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -44,7 +44,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/invoiceLine/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -54,46 +54,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/invoiceLine/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.invoiceLineList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.invoiceLineList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getinvoiceLine(id) {
+            vm.invoiceLine = null;
+            dataService.getData(apiUrl + '/invoiceLine/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.invoiceLine = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.invoiceLine = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updateinvoiceLine() {
+            if (!vm.invoiceLine) return;
+            dataService.putData(apiUrl + '/invoiceLine', vm.invoiceLine)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.invoiceLine = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.invoiceLine = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createinvoiceLine() {
+            if (!vm.invoiceLine) return;
+            dataService.postData(apiUrl + '/invoiceLine', vm.invoiceLine)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getinvoiceLine(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -104,9 +104,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deleteinvoiceLine() {
+            dataService.deleteData(apiUrl + '/invoiceLine/' +
+                vm.invoiceLine.id)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -116,34 +116,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.invoiceLine = {};
+            vm.modalTitle = 'Create invoiceLine';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createinvoiceLine;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit invoiceLine';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updateinvoiceLine;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New invoiceLine Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function invoiceLineDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete invoiceLine';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deleteinvoiceLine;
             vm.isDelete = true;
         }
         function closeModal() {

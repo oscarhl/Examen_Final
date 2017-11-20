@@ -1,39 +1,39 @@
 ﻿<div class="form-horizontal">
-    <input type="hidden" ng-model="product.id" value="{{product.id}}" />
+    <input type="hidden" ng-model="track.id" value="{{track.id}}" />
     <div class="form-group">
-        <label class="col-sm-4 control-label">Product Name: </label>
+        <label class="col-sm-4 control-label">track Name: </label>
         <div class="col-sm-6">
             <input id="companyName" class="form-control" type="text"
-                   ng-model="product.productName" value="{{product.productName}}" />
+                   ng-model="track.trackName" value="{{track.trackName}}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Supplier Id: </label>
         <div class="col-sm-6">
-            <input class="form-control" type="text" ng-model="product.supplierId"
-                   value="{{product.supplierId}}" />
+            <input class="form-control" type="text" ng-model="track.supplierId"
+                   value="{{track.supplierId}}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Unit Price: </label>
         <div class="col-sm-6">
-            <input class="form-control" type="text" ng-model="product.unitPrice"
-                   value="{{product.unitPrice}}" />
+            <input class="form-control" type="text" ng-model="track.unitPrice"
+                   value="{{track.unitPrice}}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">Package: </label>
         <div class="col-sm-6">
-            <input class="form-control" type="text" ng-model="product.package"
-                   value="{{product.package}}" />
+            <input class="form-control" type="text" ng-model="track.package"
+                   value="{{track.package}}" />
         </div>
     </div>
     <div class="form-group">
         <label class="col-sm-4 control-label">
             Is Discontinued?:
         </label>
-        <input type="checkbox" ng-model="product.isDiscontinued"
-               checked="{{product.isDiscontinued? 'checked':''}}"
-               value="{{product.isDiscontinued}}" />
+        <input type="checkbox" ng-model="track.isDiscontinued"
+               checked="{{track.isDiscontinued? 'checked':''}}"
+               value="{{track.isDiscontinued}}" />
     </div>
 </div>

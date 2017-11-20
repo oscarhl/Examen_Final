@@ -1,17 +1,17 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('playlistTrackController', playlistTrackController);
+    playlistTrackController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function playlistTrackController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.playlistTrack = {};
+        vm.playlistTrackList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -22,10 +22,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getplaylistTrack = getplaylistTrack;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = playlistTrackDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -44,7 +44,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/playlistTrack/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -54,46 +54,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/playlistTrack/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.playlistTrackList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.playlistTrackList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getplaylistTrack(id) {
+            vm.playlistTrack = null;
+            dataService.getData(apiUrl + '/playlistTrack/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.playlistTrack = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.playlistTrack = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updateplaylistTrack() {
+            if (!vm.playlistTrack) return;
+            dataService.putData(apiUrl + '/playlistTrack', vm.playlistTrack)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.playlistTrack = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.playlistTrack = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createplaylistTrack() {
+            if (!vm.playlistTrack) return;
+            dataService.postData(apiUrl + '/playlistTrack', vm.playlistTrack)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getplaylistTrack(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -104,9 +104,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deleteplaylistTrack() {
+            dataService.deleteData(apiUrl + '/playlistTrack/' +
+                vm.playlistTrack.playlistId)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -116,34 +116,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.playlistTrack = {};
+            vm.modalTitle = 'Create playlistTrack';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createplaylistTrack;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit playlistTrack';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updateplaylistTrack;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New playlistTrack Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function playlistTrackDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete playlistTrack';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deleteplaylistTrack;
             vm.isDelete = true;
         }
         function closeModal() {

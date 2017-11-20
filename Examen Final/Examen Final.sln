@@ -3,25 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.Models", "Chinook.Models\Chinook.Models.csproj", "{ADBE0A75-DF4F-45BD-84CB-F883D4E21042}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.Models", "Chinook.Models\Chinook.Models.csproj", "{ADBE0A75-DF4F-45BD-84CB-F883D4E21042}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{38B1823F-1E25-4E62-98B1-8F30A6DA689B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.Repositories", "Chinook.Repositories\Chinook.Repositories.csproj", "{3A92454C-1547-4A14-BB93-753CF70456C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.Repositories", "Chinook.Repositories\Chinook.Repositories.csproj", "{3A92454C-1547-4A14-BB93-753CF70456C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.Repositories.Dapper", "Chinook.Repositories.Dapper\Chinook.Repositories.Dapper.csproj", "{E5B2A0DB-6E94-42ED-8ED1-4CFEE15D8A93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.Repositories.Dapper", "Chinook.Repositories.Dapper\Chinook.Repositories.Dapper.csproj", "{E5B2A0DB-6E94-42ED-8ED1-4CFEE15D8A93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.UnitOfWork", "Chinook.UnitOfWork\Chinook.UnitOfWork.csproj", "{5FB37682-AF4A-4F67-8904-1DBFF7D11D24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.UnitOfWork", "Chinook.UnitOfWork\Chinook.UnitOfWork.csproj", "{5FB37682-AF4A-4F67-8904-1DBFF7D11D24}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{BD125A1A-83D3-4F9A-97BE-39B76035647A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.WebApi", "Chinook.WebApi\Chinook.WebApi.csproj", "{D7C6AC36-47FC-42D6-9D19-0B7F1E908A5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.WebApi", "Chinook.WebApi\Chinook.WebApi.csproj", "{D7C6AC36-47FC-42D6-9D19-0B7F1E908A5C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{96498AE8-35CB-44CD-9E6D-871ADA9B0EEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.ModData", "Chinook.ModData\Chinook.ModData.csproj", "{306A1B14-200F-4B61-A0E4-22C788731F91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.ModData", "Chinook.ModData\Chinook.ModData.csproj", "{306A1B14-200F-4B61-A0E4-22C788731F91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chinook.WebApi.Test", "Chinook.WebApi.Test\Chinook.WebApi.Test.csproj", "{9FD1C7AD-135E-4DBA-BE08-2212967BAE5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chinook.WebApi.Test", "Chinook.WebApi.Test\Chinook.WebApi.Test.csproj", "{9FD1C7AD-135E-4DBA-BE08-2212967BAE5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

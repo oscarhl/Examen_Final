@@ -882,17 +882,17 @@
 (function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('genreController', genreController);
+    genreController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function genreController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.genre = {};
+        vm.genreList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -903,10 +903,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getgenre = getgenre;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = genreDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -925,7 +925,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/genre/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -935,46 +935,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/genre/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.genreList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.genreList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getgenre(id) {
+            vm.genre = null;
+            dataService.getData(apiUrl + '/genre/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.genre = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.genre = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updategenre() {
+            if (!vm.genre) return;
+            dataService.putData(apiUrl + '/genre', vm.genre)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.genre = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.genre = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function creategenre() {
+            if (!vm.genre) return;
+            dataService.postData(apiUrl + '/genre', vm.genre)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getgenre(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -985,9 +985,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deletegenre() {
+            dataService.deleteData(apiUrl + '/genre/' +
+                vm.genre.genreId)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -997,34 +997,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.genre = {};
+            vm.modalTitle = 'Create genre';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = creategenre;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit genre';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updategenre;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New genre Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function genreDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete genre';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deletegenre;
             vm.isDelete = true;
         }
         function closeModal() {
@@ -1036,20 +1036,16 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productCard', productCard);
-    function productCard() {
+        .directive('genreCard', genreCard);
+    function genreCard() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
-                id: '@',
-                productName: '@',
-                supplierId: '@',
-                unitPrice: '@',
-                package: '@',
-                isDiscontinued: '='
+                genreId: '@',
+                name: '@'                
             },
-            templateUrl: 'app/private/product/directives/productcard/product-card.html'
+            templateUrl: 'app/private/genre/directives/genrecard/genre-card.html'
 
         };
     }
@@ -1058,31 +1054,31 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('genreForm', genreForm);
+    function genreForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                genre: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/genre/directives/genreform/genre-form.html'
         };
     }
 })();
 (function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('invoiceController', invoiceController);
+    invoiceController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function invoiceController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.invoice = {};
+        vm.invoiceList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -1093,10 +1089,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getinvoice = getinvoice;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = invoiceDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -1115,7 +1111,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/invoice/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -1125,46 +1121,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/invoice/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.invoiceList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.invoiceList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getinvoice(id) {
+            vm.invoice = null;
+            dataService.getData(apiUrl + '/invoice/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.invoice = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.invoice = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updateinvoice() {
+            if (!vm.invoice) return;
+            dataService.putData(apiUrl + '/invoice', vm.invoice)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.invoice = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.invoice = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createinvoice() {
+            if (!vm.invoice) return;
+            dataService.postData(apiUrl + '/invoice', vm.invoice)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getinvoice(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -1175,9 +1171,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deleteinvoice() {
+            dataService.deleteData(apiUrl + '/invoice/' +
+                vm.invoice.invoiceId)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -1187,34 +1183,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.invoice = {};
+            vm.modalTitle = 'Create invoice';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createinvoice;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit invoice';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updateinvoice;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New invoice Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function invoiceDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete invoice';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deleteinvoice;
             vm.isDelete = true;
         }
         function closeModal() {
@@ -1226,20 +1222,20 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productCard', productCard);
-    function productCard() {
+        .directive('invoiceCard', invoiceCard);
+    function invoiceCard() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
                 id: '@',
-                productName: '@',
+                invoiceName: '@',
                 supplierId: '@',
                 unitPrice: '@',
                 package: '@',
                 isDiscontinued: '='
             },
-            templateUrl: 'app/private/product/directives/productcard/product-card.html'
+            templateUrl: 'app/private/invoice/directives/invoicecard/invoice-card.html'
 
         };
     }
@@ -1248,31 +1244,31 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('invoiceForm', invoiceForm);
+    function invoiceForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                invoice: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/invoice/directives/invoiceform/invoice-form.html'
         };
     }
 })();
 (function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('invoiceLineController', invoiceLineController);
+    invoiceLineController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function invoiceLineController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.invoiceLine = {};
+        vm.invoiceLineList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -1283,10 +1279,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getinvoiceLine = getinvoiceLine;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = invoiceLineDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -1305,7 +1301,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/invoiceLine/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -1315,46 +1311,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/invoiceLine/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.invoiceLineList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.invoiceLineList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getinvoiceLine(id) {
+            vm.invoiceLine = null;
+            dataService.getData(apiUrl + '/invoiceLine/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.invoiceLine = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.invoiceLine = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updateinvoiceLine() {
+            if (!vm.invoiceLine) return;
+            dataService.putData(apiUrl + '/invoiceLine', vm.invoiceLine)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.invoiceLine = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.invoiceLine = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createinvoiceLine() {
+            if (!vm.invoiceLine) return;
+            dataService.postData(apiUrl + '/invoiceLine', vm.invoiceLine)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getinvoiceLine(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -1365,9 +1361,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deleteinvoiceLine() {
+            dataService.deleteData(apiUrl + '/invoiceLine/' +
+                vm.invoiceLine.id)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -1377,34 +1373,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.invoiceLine = {};
+            vm.modalTitle = 'Create invoiceLine';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createinvoiceLine;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit invoiceLine';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updateinvoiceLine;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New invoiceLine Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function invoiceLineDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete invoiceLine';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deleteinvoiceLine;
             vm.isDelete = true;
         }
         function closeModal() {
@@ -1416,20 +1412,20 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productCard', productCard);
-    function productCard() {
+        .directive('invoiceLineCard', invoiceLineCard);
+    function invoiceLineCard() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
                 id: '@',
-                productName: '@',
+                invoiceLineName: '@',
                 supplierId: '@',
                 unitPrice: '@',
                 package: '@',
                 isDiscontinued: '='
             },
-            templateUrl: 'app/private/product/directives/productcard/product-card.html'
+            templateUrl: 'app/private/invoiceLine/directives/invoiceLinecard/invoiceLine-card.html'
 
         };
     }
@@ -1438,31 +1434,31 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('invoiceLineForm', invoiceLineForm);
+    function invoiceLineForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                invoiceLine: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/invoiceLine/directives/invoiceLineform/invoiceLine-form.html'
         };
     }
 })();
 (function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('mediaTypeController', mediaTypeController);
+    mediaTypeController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function mediaTypeController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.mediaType = {};
+        vm.mediaTypeList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -1473,10 +1469,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getmediaType = getmediaType;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = mediaTypeDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -1495,7 +1491,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/mediaType/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -1505,46 +1501,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/mediaType/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.mediaTypeList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.mediaTypeList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getmediaType(id) {
+            vm.mediaType = null;
+            dataService.getData(apiUrl + '/mediaType/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.mediaType = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.mediaType = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updatemediaType() {
+            if (!vm.mediaType) return;
+            dataService.putData(apiUrl + '/mediaType', vm.mediaType)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.mediaType = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.mediaType = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createmediaType() {
+            if (!vm.mediaType) return;
+            dataService.postData(apiUrl + '/mediaType', vm.mediaType)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getmediaType(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -1555,9 +1551,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deletemediaType() {
+            dataService.deleteData(apiUrl + '/mediaType/' +
+                vm.mediaType.mediaTypeId)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -1567,34 +1563,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.mediaType = {};
+            vm.modalTitle = 'Create mediaType';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createmediaType;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit mediaType';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updatemediaType;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New mediaType Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function mediaTypeDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete mediaType';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deletemediaType;
             vm.isDelete = true;
         }
         function closeModal() {
@@ -1606,20 +1602,16 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productCard', productCard);
-    function productCard() {
+        .directive('mediaTypeCard', mediaTypeCard);
+    function mediaTypeCard() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
-                id: '@',
-                productName: '@',
-                supplierId: '@',
-                unitPrice: '@',
-                package: '@',
-                isDiscontinued: '='
+                mediaTypeId: '@',
+                name: '@'
             },
-            templateUrl: 'app/private/product/directives/productcard/product-card.html'
+            templateUrl: 'app/private/mediaType/directives/mediaTypecard/mediaType-card.html'
 
         };
     }
@@ -1628,31 +1620,31 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('mediaTypeForm', mediaTypeForm);
+    function mediaTypeForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                mediaType: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/mediaType/directives/mediaTypeform/mediaType-form.html'
         };
     }
 })();
 (function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('playlistController', playlistController);
+    playlistController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function playlistController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.playlist = {};
+        vm.playlistList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -1663,10 +1655,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getplaylist = getplaylist;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = playlistDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -1685,7 +1677,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/playlist/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -1695,46 +1687,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/playlist/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.playlistList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.playlistList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getplaylist(id) {
+            vm.playlist = null;
+            dataService.getData(apiUrl + '/playlist/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.playlist = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.playlist = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updateplaylist() {
+            if (!vm.playlist) return;
+            dataService.putData(apiUrl + '/playlist', vm.playlist)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.playlist = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.playlist = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createplaylist() {
+            if (!vm.playlist) return;
+            dataService.postData(apiUrl + '/playlist', vm.playlist)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getplaylist(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -1745,9 +1737,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deleteplaylist() {
+            dataService.deleteData(apiUrl + '/playlist/' +
+                vm.playlist.playlistId)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -1757,34 +1749,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.playlist = {};
+            vm.modalTitle = 'Create playlist';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createplaylist;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit playlist';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updateplaylist;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New playlist Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function playlistDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete playlist';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deleteplaylist;
             vm.isDelete = true;
         }
         function closeModal() {
@@ -1796,20 +1788,16 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productCard', productCard);
-    function productCard() {
+        .directive('playlistCard', playlistCard);
+    function playlistCard() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
-                id: '@',
-                productName: '@',
-                supplierId: '@',
-                unitPrice: '@',
-                package: '@',
-                isDiscontinued: '='
+                playlistId: '@',
+                name: '@'                
             },
-            templateUrl: 'app/private/product/directives/productcard/product-card.html'
+            templateUrl: 'app/private/playlist/directives/playlistcard/playlist-card.html'
 
         };
     }
@@ -1818,31 +1806,31 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('playlistForm', playlistForm);
+    function playlistForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                playlist: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/playlist/directives/playlistform/playlist-form.html'
         };
     }
 })();
 (function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('playlistTrackController', playlistTrackController);
+    playlistTrackController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function playlistTrackController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.playlistTrack = {};
+        vm.playlistTrackList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -1853,10 +1841,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.getplaylistTrack = getplaylistTrack;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = playlistTrackDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -1875,7 +1863,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/playlistTrack/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -1885,46 +1873,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/playlistTrack/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.playlistTrackList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.playlistTrackList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function getplaylistTrack(id) {
+            vm.playlistTrack = null;
+            dataService.getData(apiUrl + '/playlistTrack/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.playlistTrack = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.playlistTrack = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updateplaylistTrack() {
+            if (!vm.playlistTrack) return;
+            dataService.putData(apiUrl + '/playlistTrack', vm.playlistTrack)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.playlistTrack = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.playlistTrack = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createplaylistTrack() {
+            if (!vm.playlistTrack) return;
+            dataService.postData(apiUrl + '/playlistTrack', vm.playlistTrack)
                 .then(function (result) {
-                    getProduct(result.data);
+                    getplaylistTrack(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -1935,9 +1923,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deleteplaylistTrack() {
+            dataService.deleteData(apiUrl + '/playlistTrack/' +
+                vm.playlistTrack.playlistId)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -1947,34 +1935,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.playlistTrack = {};
+            vm.modalTitle = 'Create playlistTrack';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createplaylistTrack;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit playlistTrack';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updateplaylistTrack;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New playlistTrack Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function playlistTrackDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete playlistTrack';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deleteplaylistTrack;
             vm.isDelete = true;
         }
         function closeModal() {
@@ -1986,20 +1974,16 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productCard', productCard);
-    function productCard() {
+        .directive('playlistTrackCard', playlistTrackCard);
+    function playlistTrackCard() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
-                id: '@',
-                productName: '@',
-                supplierId: '@',
-                unitPrice: '@',
-                package: '@',
-                isDiscontinued: '='
+                playlistId: '@',
+                trackId: '@'              
             },
-            templateUrl: 'app/private/product/directives/productcard/product-card.html'
+            templateUrl: 'app/private/playlistTrack/directives/playlistTrackcard/playlistTrack-card.html'
 
         };
     }
@@ -2008,31 +1992,31 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('playlistTrackForm', playlistTrackForm);
+    function playlistTrackForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                playlistTrack: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/playlistTrack/directives/playlistTrackform/playlistTrack-form.html'
         };
     }
 })();
 (function () {
     'use strict';
     angular.module('app')
-        .controller('productController', productController);
-    productController.$inject = ['dataService', 'configService',
+        .controller('trackController', trackController);
+    trackController.$inject = ['dataService', 'configService',
         '$state', '$scope'];
-    function productController(dataService, configService, $state,
+    function trackController(dataService, configService, $state,
         $scope) {
         var apiUrl = configService.getApiUrl();
         var vm = this;
 
         //Propiedades
-        vm.product = {};
-        vm.productList = [];
+        vm.track = {};
+        vm.trackList = [];
         vm.modalButtonTitle = '';
         vm.readOnly = false;
         vm.isDelete = false;
@@ -2043,10 +2027,10 @@
         vm.maxSize = 10;
         vm.itemsPerPage = 30;
         //Funciones
-        vm.getProduct = getProduct;
+        vm.gettrack = gettrack;
         vm.create = create;
         vm.edit = edit;
-        vm.delete = productDelete;
+        vm.delete = trackDelete;
         vm.pageChanged = pageChanged;
         vm.closeModal = closeModal;       
         init();
@@ -2065,7 +2049,7 @@
             getPageRecords(vm.currentPage);
         }
         function totalRecords() {
-            dataService.getData(apiUrl + '/product/count')
+            dataService.getData(apiUrl + '/track/count')
                 .then(function (result) {
                     vm.totalRecords = result.data;
                     getPageRecords(vm.currentPage);
@@ -2075,46 +2059,46 @@
                 });
         }
         function getPageRecords(page) {
-            dataService.getData(apiUrl + '/product/list/' + page + '/'
+            dataService.getData(apiUrl + '/track/list/' + page + '/'
                 + vm.itemsPerPage)
                 .then(function (result) {
-                    vm.productList = result.data;
+                    vm.trackList = result.data;
                 },
                 function (error) {
-                    vm.productList = [];
+                    vm.trackList = [];
                     console.log(error);
                 });
         }
 
-        function getProduct(id) {
-            vm.product = null;
-            dataService.getData(apiUrl + '/product/' + id)
+        function gettrack(id) {
+            vm.track = null;
+            dataService.getData(apiUrl + '/track/' + id)
                 .then(function (result) {
-                    vm.product = result.data;
+                    vm.track = result.data;
                 },
                 function (error) {
-                    vm.product = null;
+                    vm.track = null;
                     console.log(error);
                 });
         }
-        function updateProduct() {
-            if (!vm.product) return;
-            dataService.putData(apiUrl + '/product', vm.product)
+        function updatetrack() {
+            if (!vm.track) return;
+            dataService.putData(apiUrl + '/track', vm.track)
                 .then(function (result) {
-                    vm.product = {};                   
+                    vm.track = {};                   
                     getPageRecords(vm.currentPage);
                     closeModal();
                 },
                 function (error) {
-                    vm.product = {};
+                    vm.track = {};
                     console.log(error);
                 });
         }
-        function createProduct() {
-            if (!vm.product) return;
-            dataService.postData(apiUrl + '/product', vm.product)
+        function createtrack() {
+            if (!vm.track) return;
+            dataService.postData(apiUrl + '/track', vm.track)
                 .then(function (result) {
-                    getProduct(result.data);
+                    gettrack(result.data);
                     detail();
                     getPageRecords(1);
                     vm.currentPage = 1;
@@ -2125,9 +2109,9 @@
                     closeModal();
                 });
         }
-        function deleteProduct() {
-            dataService.deleteData(apiUrl + '/product/' +
-                vm.product.id)
+        function deletetrack() {
+            dataService.deleteData(apiUrl + '/track/' +
+                vm.track.id)
                 .then(function (result) {
                     getPageRecords(vm.currentPage);
                     closeModal();
@@ -2137,34 +2121,34 @@
                 });
         }
         function create() {
-            vm.product = {};
-            vm.modalTitle = 'Create Product';
+            vm.track = {};
+            vm.modalTitle = 'Create track';
             vm.modalButtonTitle = 'Create';
             vm.readOnly = false;
-            vm.modalFunction = createProduct;
+            vm.modalFunction = createtrack;
             vm.isDelete = false;
         }
         function edit() {
             vm.showCreate = false;
-            vm.modalTitle = 'Edit Product';
+            vm.modalTitle = 'Edit track';
             vm.modalButtonTitle = 'Update';
             vm.readOnly = false;
-            vm.modalFunction = updateProduct;
+            vm.modalFunction = updatetrack;
             vm.isDelete = false;
         }
         function detail() {
-            vm.modalTitle = 'The New Product Created';
+            vm.modalTitle = 'The New track Created';
             vm.modalButtonTitle = '';
             vm.readOnly = true;
             vm.modalFunction = null;
             vm.isDelete = false;           
         }
-        function productDelete() {
+        function trackDelete() {
             vm.showCreate = false;
-            vm.modalTitle = 'Delete Product';
+            vm.modalTitle = 'Delete track';
             vm.modalButtonTitle = 'Delete';
             vm.readOnly = false;
-            vm.modalFunction = deleteProduct;
+            vm.modalFunction = deletetrack;
             vm.isDelete = true;
         }
         function closeModal() {
@@ -2176,20 +2160,20 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productCard', productCard);
-    function productCard() {
+        .directive('trackCard', trackCard);
+    function trackCard() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
                 id: '@',
-                productName: '@',
+                trackName: '@',
                 supplierId: '@',
                 unitPrice: '@',
                 package: '@',
                 isDiscontinued: '='
             },
-            templateUrl: 'app/private/product/directives/productcard/product-card.html'
+            templateUrl: 'app/private/track/directives/trackcard/track-card.html'
 
         };
     }
@@ -2198,14 +2182,14 @@
 (function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('trackForm', trackForm);
+    function trackForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                track: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/track/directives/trackform/track-form.html'
         };
     }
 })();

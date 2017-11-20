@@ -41,13 +41,29 @@
                 url: "/employee",
                 templateUrl: 'app/private/employee/index.html'
             })
+            .state("mediaType", {
+                url: "/mediaType",
+                templateUrl: 'app/private/mediaType/index.html'
+            })
+            .state("playlist", {
+                url: "/playlist",
+                templateUrl: 'app/private/playlist/index.html'
+            })
+            .state("playlistTrack", {
+                url: "/playlistTrack",
+                templateUrl: 'app/private/playlistTrack/index.html'
+            })
             .state("otherwise", {
                 url: "/",
                 templateUrl:"app/home.html"
             })
+
+        
     }
 
 })();
+
+
 
 (function () {
     'use strict';

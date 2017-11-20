@@ -1,20 +1,20 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .directive('productCard', productCard);
-    function productCard() {
+        .directive('invoiceLineCard', invoiceLineCard);
+    function invoiceLineCard() {
         return {
             restrict: 'E',
             transclude: true,
             scope: {
                 id: '@',
-                productName: '@',
+                invoiceLineName: '@',
                 supplierId: '@',
                 unitPrice: '@',
                 package: '@',
                 isDiscontinued: '='
             },
-            templateUrl: 'app/private/product/directives/productcard/product-card.html'
+            templateUrl: 'app/private/invoiceLine/directives/invoiceLinecard/invoiceLine-card.html'
 
         };
     }

@@ -1,39 +1,11 @@
 ﻿<div class="form-horizontal">
-    <input type="hidden" ng-model="product.id" value="{{product.id}}" />
+    <input type="hidden" ng-model="genre.id" value="{{genre.genreId}}" />
     <div class="form-group">
-        <label class="col-sm-4 control-label">Product Name: </label>
+        <label class="col-sm-4 control-label">Name: </label>
         <div class="col-sm-6">
             <input id="companyName" class="form-control" type="text"
-                   ng-model="product.productName" value="{{product.productName}}" />
+                   ng-model="genre.name" value="{{genre.name}}" />
         </div>
     </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Supplier Id: </label>
-        <div class="col-sm-6">
-            <input class="form-control" type="text" ng-model="product.supplierId"
-                   value="{{product.supplierId}}" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Unit Price: </label>
-        <div class="col-sm-6">
-            <input class="form-control" type="text" ng-model="product.unitPrice"
-                   value="{{product.unitPrice}}" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Package: </label>
-        <div class="col-sm-6">
-            <input class="form-control" type="text" ng-model="product.package"
-                   value="{{product.package}}" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">
-            Is Discontinued?:
-        </label>
-        <input type="checkbox" ng-model="product.isDiscontinued"
-               checked="{{product.isDiscontinued? 'checked':''}}"
-               value="{{product.isDiscontinued}}" />
-    </div>
+    
 </div>

@@ -1,14 +1,14 @@
 ﻿(function () {
     'use strict';
     angular.module('app')
-        .directive('productForm', productForm);
-    function productForm() {
+        .directive('genreForm', genreForm);
+    function genreForm() {
         return {
             restrict: 'E',
             scope: {
-                product: '='
+                genre: '='
             },
-            templateUrl: 'app/private/product/directives/productform/product-form.html'
+            templateUrl: 'app/private/genre/directives/genreform/genre-form.html'
         };
     }
 })();
